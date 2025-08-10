@@ -28,16 +28,6 @@
             required
           />
         </div>
-        <div class="mb-3">
-          <label for="ipInput" class="form-label">IP Address</label>
-          <input
-            type="text"
-            class="form-control"
-            id="ipInput"
-            placeholder="เช่น 192.168.1.10"
-            required
-          />
-        </div>
         <button id="addBoxSubmit" type="submit" class="btn btn-success">เพิ่ม</button>
         <button type="button" id="cancelBtn" class="btn btn-secondary ms-2">
           ยกเลิก
@@ -101,9 +91,42 @@
         </div>
     </div>
 
-    <footer class="bg-success text-white text-center py-3 mt-6">
-        <p>&copy; 2025 Plant Box | Rattanathibate School</p>
-    </footer>
+    <footer class="bg-success text-light py-4">
+  <div class="container">
+    <h5 class="mb-4 text-center">รู้จักผู้พัฒนา</h5>
+    
+    <div class="row text-center">
+      <!-- ผู้พัฒนาคนที่ 1 -->
+      <div class="col-md-4 mb-3">
+        <img src="chin.jpg" alt="ผู้พัฒนา 1" class="rounded-circle mb-2" width="150" height="150">
+        <h6>นายชินณพัฒน์ นุชอนงค์</h6>
+        <p class="mb-1">ม.4/1</p>
+        <small><a href="https://www.instagram.com/tigger.js/" class="text-light text-decoration-none">Click to Instagram</a></small>
+      </div>
+      
+      <!-- ผู้พัฒนาคนที่ 2 -->
+      <div class="col-md-4 mb-3">
+        <img src="kananont.png" alt="ผู้พัฒนา 2" class="rounded-circle mb-2" width="150" height="150">
+        <h6>นางคุณานนต์ ยอดเกวียน</h6>
+        <p class="mb-1">ม.4/1</p>
+        <small><a href="https://www.instagram.com/kunanonyk?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="text-light text-decoration-none">Click to Instagram</a></small>
+      </div>
+      
+      <!-- ผู้พัฒนาคนที่ 3 -->
+      <div class="col-md-4 mb-3">
+        <img src="sasipa.png" alt="ผู้พัฒนา 3" class="rounded-circle mb-2" width="150" height="150">
+        <h6>นางสาวศศิประภา ล้ำเลิศ</h6>
+        <p class="mb-1">ม.4/1</p>
+        <small><a href="https://www.instagram.com/sasiprapa_.lam?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="text-light text-decoration-none">Click to Instagram</a></small>
+      </div>
+    </div>
+    
+    <hr class="border-light">
+    <p class="text-center mb-0">© 2025 Plan Box Project | Rattanathibate School</p>
+  </div>
+</footer>
+
+
 
 <script>
   // อัปเดตเวลาในทุกกล่อง
@@ -134,14 +157,14 @@
         if (data.length > 0) {
           const tempEl = box.querySelector(".temp");
           const moistureEl = box.querySelector(".moisture");
-          if(tempEl) tempEl.innerText = data[0].temperature + " °C";
-          if(moistureEl) moistureEl.innerText = data[0].moisture + " %";
+          if (tempEl) tempEl.innerText = data[0].temperature + " °C";
+          if (moistureEl) moistureEl.innerText = data[0].moisture + " %";
         }
       } catch {
         const tempEl = box.querySelector(".temp");
         const moistureEl = box.querySelector(".moisture");
-        if(tempEl) tempEl.innerText = "-- °C";
-        if(moistureEl) moistureEl.innerText = "-- %";
+        if (tempEl) tempEl.innerText = "-- °C";
+        if (moistureEl) moistureEl.innerText = "-- %";
       }
     }
   }
@@ -152,80 +175,15 @@
     await updateAdditionalBoxes();
   }
 
-  // เริ่มอัปเดตเวลาทุก 1 วินาที
-  setInterval(updateAllTimes, 1000);
-
-  // เริ่มอัปเดตข้อมูลทุก 5 วินาที
-  setInterval(updateAllBoxes, 5000);
-
-  // เรียกอัปเดตครั้งแรก
-  updateAllBoxes();
-
-  // ฟังก์ชันบันทึกกล่องทั้งหมดลง localStorage
-  function saveBoxes() {
-    const boxes = document.querySelectorAll("#additionalBoxes .box");
-    const data = [];
-    boxes.forEach(box => {
-      data.push(box.getAttribute("data-api"));
-    });
-    localStorage.setItem("plantBoxes", JSON.stringify(data));
-    console.log("Saved boxes:", data);
-  }
-
-  // ฟังก์ชันโหลดกล่องจาก localStorage
-  function loadBoxes() {
-    const data = localStorage.getItem("plantBoxes");
-    if (!data) return;
-    const apiList = JSON.parse(data);
-    const boxContainer = document.getElementById("additionalBoxes");
-    boxContainer.innerHTML = "";
-
-    apiList.forEach((apiUrl, index) => {
-      const count = index + 1;
-      const box = document.createElement("div");
-      box.classList.add("box", "border", "rounded", "p-3", "mb-3", "bg-light");
-      box.setAttribute("data-api", apiUrl);
-      box.innerHTML = `
-        <h2 class="text-center mt-3">Box ${count}</h2>
-        <div class="container-fluid mt-3">
-          <div class="row">
-            <div class="col text-center">
-              <h2 class="temp">-- °C</h2>
-              <p>อุณหภูมิในดิน</p>
-            </div>
-            <div class="col text-center">
-              <h2 class="moisture">-- %</h2>
-              <p>ความชื้นในดิน</p>
-            </div>
-            <div class="col text-center">
-              <h2 class="datetime">--/--/---- --:--:--</h2>
-              <p>วันและเวลาปัจจุบัน</p>
-            </div>
-          </div>
-        </div>
-      `;
-      boxContainer.appendChild(box);
-    });
-
-    updateAllTimes();
-  }
-
-  // โหลดกล่องตอนเปิดเพจ
-  loadBoxes();
-
-  // เมื่อกดปุ่มเพิ่มกล่อง
-  document.getElementById("addBoxBtn").addEventListener("click", () => {
-    const apiUrl = prompt("กรุณาใส่ API URL ของกล่องนี้:");
-    if (!apiUrl) return alert("ต้องใส่ API URL");
-
-    const boxContainer = document.getElementById("additionalBoxes");
-    const count = boxContainer.childElementCount + 1;
-
+  // สร้างกล่อง
+  function createBox(apiUrl, count) {
     const box = document.createElement("div");
-    box.classList.add("box", "border", "rounded", "p-3", "mb-3", "bg-light");
+    box.classList.add("box", "border", "rounded", "p-3", "mb-3", "bg-light", "position-relative");
     box.setAttribute("data-api", apiUrl);
     box.innerHTML = `
-      <h2 class="text-center mt-3">Box ${count}</h2>
+      <button class="btn btn-danger btn-sm delete-box" 
+              style="position:absolute; top:10px; right:10px;">ลบ</button>
+      <h2 class="mt-3 text-center">Box ${count}</h2>
       <div class="container-fluid mt-3">
         <div class="row">
           <div class="col text-center">
@@ -244,11 +202,75 @@
       </div>
     `;
 
+    // ปุ่มลบ
+    box.querySelector(".delete-box").addEventListener("click", () => {
+      box.remove();
+      saveBoxes();
+      renumberBoxes();
+    });
+
+    return box;
+  }
+
+  // บันทึกกล่องทั้งหมดลง localStorage
+  function saveBoxes() {
+    const boxes = document.querySelectorAll("#additionalBoxes .box");
+    const data = [];
+    boxes.forEach(box => {
+      data.push(box.getAttribute("data-api"));
+    });
+    localStorage.setItem("plantBoxes", JSON.stringify(data));
+  }
+
+  // โหลดกล่องจาก localStorage
+  function loadBoxes() {
+    const data = localStorage.getItem("plantBoxes");
+    if (!data) return;
+    const apiList = JSON.parse(data);
+    const boxContainer = document.getElementById("additionalBoxes");
+    boxContainer.innerHTML = "";
+
+    apiList.forEach((apiUrl, index) => {
+      const box = createBox(apiUrl, index + 1);
+      boxContainer.appendChild(box);
+    });
+
+    updateAllTimes();
+    updateAdditionalBoxes();
+  }
+
+  // เรียงหมายเลขกล่องใหม่
+  function renumberBoxes() {
+    document.querySelectorAll("#additionalBoxes .box").forEach((box, index) => {
+      box.querySelector("h2.text-center").innerText = `Box ${index + 1}`;
+    });
+  }
+
+  // เมื่อกดปุ่มเพิ่มกล่อง
+  document.getElementById("addBoxBtn").addEventListener("click", () => {
+    const apiUrl = prompt("กรุณาใส่ API URL ของกล่องนี้:");
+    if (!apiUrl) return alert("ต้องใส่ API URL");
+
+    const boxContainer = document.getElementById("additionalBoxes");
+    const count = boxContainer.childElementCount + 1;
+
+    const box = createBox(apiUrl, count);
     boxContainer.appendChild(box);
-    saveBoxes(); // บันทึกกล่องใหม่ลง localStorage
-    updateAllBoxes(); // อัปเดตข้อมูลกล่องใหม่ทันที
+    saveBoxes();
+    updateAllBoxes();
   });
+
+  // อัปเดตเวลาทุก 1 วินาที
+  setInterval(updateAllTimes, 1000);
+
+  // อัปเดตข้อมูลทุก 5 วินาที
+  setInterval(updateAllBoxes, 5000);
+
+  // โหลดกล่องเมื่อเปิดหน้า
+  loadBoxes();
 </script>
+
+
 
 
 
