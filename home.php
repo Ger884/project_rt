@@ -96,23 +96,18 @@
     <h5 class="mb-4 text-center">รู้จักผู้พัฒนา</h5>
     
     <div class="row text-center">
-      <!-- ผู้พัฒนาคนที่ 1 -->
       <div class="col-md-4 mb-3">
         <img src="chin.jpg" alt="ผู้พัฒนา 1" class="rounded-circle mb-2" width="150" height="150">
         <h6>นายชินณพัฒน์ นุชอนงค์</h6>
         <p class="mb-1">ม.4/1</p>
         <small><a href="https://www.instagram.com/tigger.js/" class="text-light text-decoration-none">Click to Instagram</a></small>
       </div>
-      
-      <!-- ผู้พัฒนาคนที่ 2 -->
       <div class="col-md-4 mb-3">
         <img src="kananont.png" alt="ผู้พัฒนา 2" class="rounded-circle mb-2" width="150" height="150">
         <h6>นางคุณานนต์ ยอดเกวียน</h6>
         <p class="mb-1">ม.4/1</p>
         <small><a href="https://www.instagram.com/kunanonyk?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="text-light text-decoration-none">Click to Instagram</a></small>
       </div>
-      
-      <!-- ผู้พัฒนาคนที่ 3 -->
       <div class="col-md-4 mb-3">
         <img src="sasipa.png" alt="ผู้พัฒนา 3" class="rounded-circle mb-2" width="150" height="150">
         <h6>นางสาวศศิประภา ล้ำเลิศ</h6>
@@ -129,7 +124,7 @@
 
 
 <script>
-  // อัปเดตเวลาในทุกกล่อง
+
   function updateAllTimes() {
     const now = new Date();
     const day = String(now.getDate()).padStart(2, "0");
@@ -145,7 +140,6 @@
     });
   }
 
-  // อัปเดตข้อมูลกล่องทั้งหมด
   async function updateAdditionalBoxes() {
     const boxes = document.querySelectorAll("#additionalBoxes .box");
     for (const box of boxes) {
@@ -169,13 +163,11 @@
     }
   }
 
-  // ฟังก์ชันรวมอัปเดตข้อมูลทั้งหมด
   async function updateAllBoxes() {
     updateAllTimes();
     await updateAdditionalBoxes();
   }
 
-  // สร้างกล่อง
   function createBox(apiUrl, count) {
     const box = document.createElement("div");
     box.classList.add("box", "border", "rounded", "p-3", "mb-3", "bg-light", "position-relative");
@@ -202,7 +194,6 @@
       </div>
     `;
 
-    // ปุ่มลบ
     box.querySelector(".delete-box").addEventListener("click", () => {
       box.remove();
       saveBoxes();
@@ -212,7 +203,6 @@
     return box;
   }
 
-  // บันทึกกล่องทั้งหมดลง localStorage
   function saveBoxes() {
     const boxes = document.querySelectorAll("#additionalBoxes .box");
     const data = [];
@@ -222,7 +212,6 @@
     localStorage.setItem("plantBoxes", JSON.stringify(data));
   }
 
-  // โหลดกล่องจาก localStorage
   function loadBoxes() {
     const data = localStorage.getItem("plantBoxes");
     if (!data) return;
@@ -239,14 +228,12 @@
     updateAdditionalBoxes();
   }
 
-  // เรียงหมายเลขกล่องใหม่
   function renumberBoxes() {
     document.querySelectorAll("#additionalBoxes .box").forEach((box, index) => {
       box.querySelector("h2.text-center").innerText = `Box ${index + 1}`;
     });
   }
 
-  // เมื่อกดปุ่มเพิ่มกล่อง
   document.getElementById("addBoxBtn").addEventListener("click", () => {
     const apiUrl = prompt("กรุณาใส่ API URL ของกล่องนี้:");
     if (!apiUrl) return alert("ต้องใส่ API URL");
@@ -260,14 +247,12 @@
     updateAllBoxes();
   });
 
-  // อัปเดตเวลาทุก 1 วินาที
   setInterval(updateAllTimes, 1000);
 
-  // อัปเดตข้อมูลทุก 5 วินาที
   setInterval(updateAllBoxes, 5000);
 
-  // โหลดกล่องเมื่อเปิดหน้า
   loadBoxes();
+  
 </script>
 
 
