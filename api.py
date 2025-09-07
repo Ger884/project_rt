@@ -503,9 +503,9 @@ def predict_growth():
     data = request.json
 
     try:
-        plant_date_str = data.get('plantDate')          # '2025-08-10'
-        plant_type = data.get('plantType')              # 'กุยช่าย'
-        plant_height = float(data.get('plantHeight', 0))  # เริ่มต้น cm
+        plant_date_str = data.get('plantDate')
+        plant_type = data.get('plantType')
+        plant_height = float(data.get('plantHeight', 0))
         temperature = float(data.get('temperature', 0))
         moisture = float(data.get('moisture', 0))
         current_date = datetime.now()
@@ -518,9 +518,7 @@ def predict_growth():
         growth_rate = 0.5 + (temperature - 25) * 0.05 + (moisture - 50) * 0.02
         predicted_growth = plant_height + growth_rate * days_since_plant
 
-        # จำนวนวันที่ควรปลูกก่อนเก็บเกี่ยว
-        harvest_days = HARVEST_DAYS.get(plant_type, 30)  # default 30 วัน
-
+        harvest_days = HARVEST_DAYS.get(plant_type, 30)
         harvest_date = plant_date + timedelta(days=harvest_days)
         harvest_date_str = harvest_date.strftime('%Y-%m-%d')
 
