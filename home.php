@@ -221,13 +221,11 @@ function createBox(boxData) {
     <div class="analysis-result mt-3 text-center" style="font-weight:bold;"></div>
   `;
 
-  // ลบกล่อง
   box.querySelector(".delete-box").addEventListener("click", () => {
     box.remove();
     saveBoxes();
   });
 
-  // แก้ไขชื่อกล่อง
   box.querySelector(".edit-name-btn").addEventListener("click", () => {
     const newName = prompt("กรุณาใส่ชื่อใหม่ของกล่องนี้:", box.getAttribute("data-name"));
     if (newName && newName.trim() !== "") {
@@ -237,7 +235,6 @@ function createBox(boxData) {
     }
   });
 
-  // ปุ่มวิเคราะห์
 box.querySelector(".analyze-btn").addEventListener("click", async () => {
   const apiUrl = box.getAttribute("data-api");
   const plantDateStr = box.querySelector(".plant-date").innerText; // "2025-08-10"
